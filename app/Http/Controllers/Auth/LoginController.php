@@ -12,6 +12,10 @@ class LoginController extends Controller
 {
     public function index()
     {
+
+        if (Auth::check()) {
+            return redirect()->route('employee-dashboard');
+        }
         return view('user-login');
     }
 
@@ -19,20 +23,27 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         Log::info($request->all());
-
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return view('layout');
-            // return response()->json([
-            //     'message' => 'Login successful',
-            //     'user' => Auth::user()
-            // ], 200);
+            return redirect()->route('employee-dashboard');
         }
 
-        return response()->json([
-            'message' => 'Invalid credentials'
-        ], 401);
+        return redirect()->back()->withErrors(['error' => 'Incorrect username or password. Please try again.'])->withInput();
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

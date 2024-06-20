@@ -14,10 +14,11 @@ class AddAccountController extends Controller
             User::create([
                 'first_name' => 'Clark',
                 'surname' => 'Velasco',
-                'username' => 'Admin',
-                'email' => 'admin@test.com',
-                'change_password' => 1,
-                'password' => Hash::make('password123'),
+                'username' => 'Employee',
+                'email' => 'employee@test.com',
+                'change_password' => 2,
+                'password' => Hash::make('employee123'),
+                'role' => 1,
             ]);
 
             return response()->json([
