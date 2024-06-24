@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,6 @@ class LoginController extends Controller
 {
     public function index()
     {
-
         if (Auth::check()) {
             return redirect()->route('employee-dashboard');
         }
@@ -22,7 +22,8 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        Log::info($request->all());
+        $currentTime = Carbon::now();
+
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -30,7 +31,11 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('employee-dashboard');
+            Log::info('User logged in', [
+                'user' => Auth::user()->username,
+                'time' => $currentTime
+            ]);
+            return redirect()->route('employee-dashboard')->with('no-back', true);
         }
 
         return redirect()->back()->withErrors(['error' => 'Incorrect username or password. Please try again.'])->withInput();

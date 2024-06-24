@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Yajra\DataTables\DataTables;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,10 +15,28 @@ class EmployeeController extends Controller
 {
     //
 
-    public function index(){
+    public function index(Request $request){
+        if($request->ajax()){
+            $data = Employee::all();
+            Log::info(Employee::all());
+            return Datatables::of($data)
+                ->addColumn('image', function($row){
+                    // if($row->image == null){
+                    //     $return ''
+                    // }
+                    return '<img class="employee-image" src="'.$row->image.'" alt="">';
+                })
+                ->addColumn('name', function($row){
+                    return '<h1 class="name">'.$row->first_name.' '.$row->middle_name.' '.$row->last_name.'</h1>
+                            <p class="id">'.$row->employee_id.'</p>';
+                })->addColumn('attendance', function($row){
+                    return ' 6/7 ';
+                })->rawColumns(['name', 'image'])
+                ->make(true);
+        }
         return view('table/employee-table')
-        ->with('Title', 'Lists')
-        ->with('user', Auth::user());
+                ->with('Title', 'Employee Lists')
+                ->with('user', Auth::user());
     }
 
     public function add(){
@@ -89,8 +108,6 @@ class EmployeeController extends Controller
                 ]);
             }
 
-
-
             $employee = new Employee();
 
             $employee->employee_id = $validatedData['employee_id'];
@@ -119,8 +136,6 @@ class EmployeeController extends Controller
                 'status' => 'success',
                 'message' => 'Employee saved successfully: ' . $employee->id
             ]);
-            // return redirect()->route('employee.show', ['employee' => $employee->id])
-            //     ->with('success', 'Employee created successfully');
         } catch (QueryException $e) {
             Log::error('Query Exception occurred while saving employee: ' . $e->getMessage());
             return response()->json([
@@ -135,5 +150,13 @@ class EmployeeController extends Controller
                 'message' => 'Error in saving employee data'
             ]);
         }
+    }
+
+    public function show($id){
+        $employee = Employee::findOrFail($id);
+        // return $employee;
+        return view('employee/show', compact('employee'))
+                ->with('Title', 'Employee Details')
+                ->with('user', Auth::user());;
     }
 }

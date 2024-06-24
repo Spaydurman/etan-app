@@ -155,9 +155,6 @@ input{
 }
 
 /* file upload */
-.file-upload{
-
-}
 .drop-area{
     display: flex;
     justify-content: center;
