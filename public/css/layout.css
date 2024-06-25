@@ -30,9 +30,13 @@ html, body {
     width: 100%;
     height: 5rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.finishing-team{
+    font-size: 0.75rem
 }
 .sidebar-menu ul {
     padding: 0;

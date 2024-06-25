@@ -30,7 +30,8 @@
         <section>
             <div class="sidebar">
                 <div class="company-name">
-                    Etan Construction
+                    <div>ETAN CONSTRUCTION</div>
+                    <div class="finishing-team">FINISHING TEAM</div>
                 </div>
                 <div class="sidebar-menu">
                     <ul>

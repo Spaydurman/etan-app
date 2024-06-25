@@ -128,6 +128,7 @@
     </section>
     <div class="edit-con">
         <form action="{{ route('employee.edit') }}">
+            @csrf
             <input type="hidden" name="id" value="{{$employee->id}}">
             <button type="submit" class="edit">Edit</button>
         </form>

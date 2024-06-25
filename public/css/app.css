@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-:root {
-
-    --primary-clr: #E0E1DD;
-    --secondary-clr: #0D1B2A;
-    /* --poppins: 'Poppins'; */
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);
+:root{
+    --primary-clr:#e0e1dd;
+    --secondary-clr:#0d1b2a;
     --white: #FAF9F6;
 }
-

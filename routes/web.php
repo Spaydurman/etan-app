@@ -34,3 +34,4 @@ Route::get('/employee/add', [EmployeeController::class, 'add'])->name('employee.
 Route::post('/employee/create', [EmployeeController::class, 'create'])->name('employee.create')->middleware(['auth', 'role:1']);
 Route::get('/employee/details/{id}', [EmployeeController::class, 'show'])->name('employee.details')->middleware(['auth', 'role:1']);
 Route::get('/employee/edit', [EmployeeController::class, 'edit'])->name('employee.edit')->middleware(['auth', 'role:1']);
+Route::post('/employee/edit/save', [EmployeeController::class, 'saveEdit'])->name('employee.save')->middleware(['auth', 'role:1']);
