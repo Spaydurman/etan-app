@@ -18,6 +18,8 @@ class AddAccountController extends Controller
                 'email' => 'admin@test.com',
                 'change_password' => 1,
                 'password' => Hash::make('password123'),
+                'role' => 1,
+                'image' => null
             ]);
 
             return response()->json([

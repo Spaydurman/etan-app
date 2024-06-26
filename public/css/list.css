@@ -1,0 +1,63 @@
+.content-section{
+    padding: 1rem;
+}
+.table{
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 100%;
+
+}
+.employee-table{
+    /* width: 500px !important; */
+    overflow-y: auto !important;
+    /* background-color: blue; */
+}
+.employee-table th {
+    /* white-space: nowrap; */
+}
+.employee-table tr {
+    /* cursor: url("../images/mdi--sword.png"), auto; */
+    cursor: pointer;
+}
+.employee-table tr:hover {
+    box-shadow: -3px 5px 30px -9px rgba(13, 27, 42.89);
+    -webkit-box-shadow: -3px 5px 30px -9px rgba(13, 27, 42.89);
+    -moz-box-shadow: -3px 5px 30px -9px rgba(13, 27, 42.89);
+}
+.name{
+    font-size: 1rem;
+    margin: 0;
+}
+.id{
+    font-size: 0.75rem;
+    margin: 0;
+}
+.employee-image{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+
+/* -----------Button------------- */
+.import-export{
+    display: flex;
+    justify-content: right;
+    margin-bottom: 1rem;
+    gap: 1em;
+}
+.btn{
+    background-color: var(--secondary-clr);
+    color: var(--primary-clr);
+    width: 8rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}

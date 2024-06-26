@@ -1,0 +1,57 @@
+
+.login-section{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.login-container{
+    margin-top: calc(100vh - 95vh);
+    width: 32.5rem;
+    max-width: 32.5rem;
+}
+h1{
+    font-size: 52px;
+    margin: 0;
+    text-transform: uppercase;
+    margin-bottom: -0.5rem;
+}
+.company-name{
+    margin: 0;
+    font-size: 24px;
+}
+.company-team{
+    margin: 0;
+}
+.login-inputs{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+label{
+    margin-top: 0.5rem
+}
+.username, .password{
+    max-width: 32.5rem;
+    height:  3rem;
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    border: 1px solid #E0E0E0;
+}
+.sign-in{
+    max-width: 32.5rem;
+    height:  3rem;
+    border-radius: 0.5rem;
+    background-color: var(--secondary-clr);
+    color: var(--primary-clr);
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+.error-message{
+    width: 100%;
+    color: #FE4654;
+    text-align: center;
+    /* padding: 0.5rem 0; */
+    display: block;
+}
