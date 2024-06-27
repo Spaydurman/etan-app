@@ -13,9 +13,9 @@
     overflow-y: auto !important;
     /* background-color: blue; */
 }
-.employee-table th {
-    /* white-space: nowrap; */
-}
+/* .employee-table th {
+    white-space: nowrap;
+} */
 .employee-table tr {
     /* cursor: url("../images/mdi--sword.png"), auto; */
     cursor: pointer;
@@ -51,7 +51,7 @@
 .btn{
     background-color: var(--secondary-clr);
     color: var(--primary-clr);
-    width: 8rem;
+    /* width: 8rem; */
     height: 2.5rem;
     border-radius: 10px;
     font-size: 1rem;
@@ -59,5 +59,98 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.5em;
+    padding: 1rem;
+    border: none;
+}
+.btn:hover{
+    background-color: rgba(13, 27, 42, 0.9);
+    color: var(--primary-clr);
+}
+
+
+/* Import Attendance */
+.import-attendance{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.file-upload{
+    position: relative;
+    background-color: var(--white);
+    max-width: 30rem;
+    width: 30rem;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+.file-upload h1{
+    margin-top: 1rem;
+}
+.close-import-attendance {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--secondary-clr);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.close-import-attendance:hover{
+    color: #CF3A33;
+}
+.drop-area{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    border: 2px dashed var(--secondary-clr);
+    color: var(--secondary-clr);
+    border-radius: 1rem;
+}
+.upload-icon{
+    font-size: 3rem;
+    color: var(--secondary-clr);
+}
+.upload-text{
+    margin-top: 0px !important;
+}
+.browse{
+    background-color: var(--secondary-clr);
+    color: var(--primary-clr);
+    padding: 0.25rem 1.5rem;
+    border-radius: 0.25rem;
+    max-width: 4rem;
+    cursor: pointer;
+}
+.upload-attendance{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding: 1rem;
+}
+.upload .btn{
+    background-color: var(--secondary-clr);
+    color: var(--primary-clr);
+    width: 8rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 1em;
+    border: none;
 }
