@@ -1,6 +1,5 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/employee.css') }}">
-
 @endsection
 @extends('layout')
 
@@ -89,7 +88,7 @@
 
                     <h1>Total Cash Advance Balance (₱)</h1>
                     <div class="input">
-                        <input type="number" name="cab" id="cab" class="cab" required>
+                        <input type="number" name="cab" id="cab" class="cab" disabled>
                     </div>
                 </div>
                 <div class="contact-information">
@@ -110,7 +109,6 @@
                     </div>
                     <div class="file-upload">
                         <h1>File Upload</h1>
-                        {{-- <label for="fileinput" class="control-label"><h1>File Upload</h1></label> --}}
                         <div id="drop-area" class="drop-area" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" >
                             <div id="show_img" style="display: none;">
                                 <img id="uploadedImage" src="#" alt="Uploaded Image" style="max-width: 100%; max-height: 200px;">
@@ -121,10 +119,8 @@
                             <div id="show_file" style="display: none;">
                                 <p id="uploadedFileName"></p>
                             </div>
-                            {{-- <i id="uploadIcon" class="upload-icon"></i> --}}
                             <svg id="uploadIcon" class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="1.15em" height="1em" viewBox="0 0 16 14"><path fill="currentColor" d="M12 11c-.28 0-.5-.22-.5-.5s.22-.5.5-.5c1.65 0 3-1.35 3-3s-1.35-3-3-3h-1.05c-.18 0-.34-.09-.43-.25C9.88 2.65 8.76 2 7.51 2c-1.93 0-3.5 1.57-3.5 3.5c0 .28-.22.5-.5.5h-.5c-1.1 0-2 .9-2 2s.9 2 2 2c.28 0 .5.22.5.5s-.22.5-.5.5c-1.65 0-3-1.35-3-3s1.35-3 3-3h.03c.25-2.25 2.16-4 4.47-4c1.49 0 2.89.76 3.72 2h.78c2.21 0 4 1.79 4 4s-1.79 4-4 4Z"/><path fill="currentColor" d="M10 9.25a.47.47 0 0 1-.35-.15L7.5 6.95L5.35 9.1c-.2.2-.51.2-.71 0s-.2-.51 0-.71l2.5-2.5c.2-.2.51-.2.71 0l2.5 2.5c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15"/><path fill="currentColor" d="M7.5 13c-.28 0-.5-.22-.5-.5v-6c0-.28.22-.5.5-.5s.5.22.5.5v6c0 .28-.22.5-.5.5"/></svg>
                             <p class="upload-text">Drag and drop files here <br> or <br> <a id="browseButton" class="browse" onclick="document.getElementById('fileinput').click(); return false;">Browse Files</a></p>
-                            {{-- <button  id="browseButton" class="browse" onclick="document.getElementById('fileinput').click(); return false;">Browse Files</button> --}}
                             <input type="file" id="fileinput" name="file_upload" class="" style="display: none;" />
                         </div>
                         <span class="text-danger">@error('image') {{ $message }} @enderror</span>
@@ -133,12 +129,73 @@
 
             </section>
             <div class="save-con">
+                <button type="button" id="importButton" class="save btn" style="margin-right: 1rem">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M8.71 7.71L11 5.41V15a1 1 0 0 0 2 0V5.41l2.29 2.3a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42l-4-4a1 1 0 0 0-.33-.21a1 1 0 0 0-.76 0a1 1 0 0 0-.33.21l-4 4a1 1 0 1 0 1.42 1.42M21 14a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4a1 1 0 0 0-2 0v4a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-4a1 1 0 0 0-1-1"/></svg>
+                    Import
+                </button>
                 <button type="submit" class="save">Save</button>
             </div>
         </form>
     </div>
+
+    <section class="import-attendance">
+        <form action="{{ route('employee.upload') }}" id="employee-upload-form" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="file-import">
+                <h1>Add Employee Import</h1>
+                <button type="button" class="close-import-attendance"> x </button>
+                <div id="drop-area-import" class="drop-area" ondrop="dropHandlerImport(event);" ondragover="dragOverHandlerImport(event);">
+                    <div id="show_file_import" style="display: none;">
+                        <p id="uploadedFileNameImport"></p>
+                    </div>
+                    <svg id="uploadIcon" class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="1.15em" height="1em" viewBox="0 0 16 14"><path fill="currentColor" d="M12 11c-.28 0-.5-.22-.5-.5s.22-.5.5-.5c1.65 0 3-1.35 3-3s-1.35-3-3-3h-1.05c-.18 0-.34-.09-.43-.25C9.88 2.65 8.76 2 7.51 2c-1.93 0-3.5 1.57-3.5 3.5c0 .28-.22.5-.5.5h-.5c-1.1 0-2 .9-2 2s.9 2 2 2c.28 0 .5.22.5.5s-.22.5-.5.5c-1.65 0-3-1.35-3-3s1.35-3 3-3h.03c.25-2.25 2.16-4 4.47-4c1.49 0 2.89.76 3.72 2h.78c2.21 0 4 1.79 4 4s-1.79 4-4 4Z"/><path fill="currentColor" d="M10 9.25a.47.47 0 0 1-.35-.15L7.5 6.95L5.35 9.1c-.2.2-.51.2-.71 0s-.2-.51 0-.71l2.5-2.5c.2-.2.51-.2.71 0l2.5 2.5c.2.2.2.51 0 .71c-.1.1-.23.15-.35.15"/><path fill="currentColor" d="M7.5 13c-.28 0-.5-.22-.5-.5v-6c0-.28.22-.5.5-.5s.5.22.5.5v6c0 .28-.22.5-.5.5"/></svg>
+                    <p class="upload-text">Drag and drop Excel files here <br> or <br> <a id="browseButton" class="browse" onclick="document.getElementById('fileimport').click(); return false;">Browse Files</a></p>
+                    <input type="file" id="fileimport" name="excel_file" accept=".xlsx, .xls" style="display: none;" onchange="handleFileImport(event);">
+                </div>
+                <div class="upload-employee">
+                    <button type="submit" class="upload-btn">Upload</button>
+                </div>
+            </div>
+        </form>
+    </section>
 @endsection
 @section('script')
+    <script>
+        window.baseUrls = {
+            getTable: '{{ route('employee-dashboard') }}',
+        }
+        function dragOverHandlerImport(event) {
+            event.preventDefault();
+            document.getElementById('drop-area-import').classList.add('dragover');
+        }
+
+        function dropHandlerImport(event) {
+            event.preventDefault();
+            document.getElementById('drop-area-import').classList.remove('dragover');
+
+            var files = event.dataTransfer.files;
+            if (files && files.length > 0) {
+                var fileInput = document.getElementById('fileimport');
+                fileInput.files = files;
+
+                handleFileImport(event);
+            }
+        }
+
+        function handleFileImport(event) {
+            var files = event.target.files || event.dataTransfer.files;
+            var uploadedFileName = document.getElementById('uploadedFileNameImport');
+            console.log(uploadedFileName);
+            if (files && files.length > 0) {
+                var fileName = files[0].name;
+                uploadedFileName.textContent = fileName;
+                document.getElementById('show_file_import').style.display = 'block';
+            } else {
+                uploadedFileName.textContent = '';
+                document.getElementById('show_file_import').style.display = 'none';
+            }
+        }
+    </script>
     <script>
        document.getElementById('image').addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -164,7 +221,6 @@
         });
     </script>
     <script>
-
         document.getElementById('fileinput').addEventListener('change', handleFileSelect);
 
         function handleFileSelect(event) {
@@ -242,62 +298,7 @@
             handleFileSelect({ target: { files: [file] } });
         }
     </script>
-    <script>
-        document.getElementById('new-employee-form').addEventListener('submit', function(event) {
-            event.preventDefault();
 
-            let form = document.getElementById('new-employee-form');
-            let formData = new FormData(form);
 
-            axios.post(form.action, formData)
-                .then(function(response) {
-                    if(response.data.status === 'success'){
-                        Swal.fire({
-                            title: 'Success!',
-                            text: response.data.message,
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            // Optional: You can reload the page or redirect to another page
-                            window.location.reload();
-                        });
-                    }else if(response.data.status === 'error'){
-                        Swal.fire({
-                            title: 'Error!',
-                            text: response.data.message,
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        })
-                    }
-
-                })
-                .catch(function(error) {
-                    if (error.response) {
-                        // Server responded with a status other than 200 range
-                        let errors = error.response.data.errors;
-                        let errorMessages = '';
-                        for (let field in errors) {
-                            if (errors.hasOwnProperty(field)) {
-                                errorMessages += errors[field].join('<br>') + '<br>';
-                            }
-                        }
-                        Swal.fire({
-                            title: 'Error!',
-                            html: errorMessages,
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    } else {
-                        // Something else happened while setting up the request
-                        console.error('Error', error.message);
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An unexpected error occurred.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('js/add.js') }}"></script>
 @endsection

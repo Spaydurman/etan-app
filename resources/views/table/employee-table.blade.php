@@ -85,7 +85,7 @@
     }
 
     function handleFileSelect(event) {
-        var files = event.target.files || event.dataTransfer.files; // Use event.target.files or event.dataTransfer.files depending on where the event comes from
+        var files = event.target.files || event.dataTransfer.files;
         var uploadedFileName = document.getElementById('uploadedFileName');
 
         if (files && files.length > 0) {

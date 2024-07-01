@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->date('start_date');
             $table->string('supervisor');
             $table->float('daily_rate');
-            $table->float('cash_advance');
+            $table->float('cash_advance')->nullable();
             $table->date('birthdate');
             $table->string('nationality');
             $table->string('gender');
