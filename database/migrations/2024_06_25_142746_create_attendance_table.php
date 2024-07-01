@@ -18,8 +18,8 @@ class CreateAttendanceTable extends Migration
             $table->unsignedBigInteger('employee_id');
             $table->string('name');
             $table->date('date');
-            $table->time('time-in')->nullable();
-            $table->time('time-out')->nullable();
+            $table->time('time_in')->nullable();
+            $table->time('time_out')->nullable();
             $table->float('overtime')->nullable();
             $table->timestamps();
 

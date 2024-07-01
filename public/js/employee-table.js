@@ -4,7 +4,7 @@ $(function () {
         processing: true,
         serverSide: true,
         autoWidth: false,
-        scrollX: '100%',
+        scrollX: true,
         ajax: window.baseUrls.getTable,
         columns: [
             {data: 'image', name: 'image'},
@@ -16,6 +16,8 @@ $(function () {
             {data: 'email', name: 'email'},
             {data: 'hired_date', name: 'hired_date'},
             {data: 'attendance', name: 'attendance'},
+            {data: 'daily_rate', name: 'daily_rate'},
+            {data: 'salary', name: 'salary'},
         ],
         createdRow: function(row, data, dataIndex) {
             $(row).on('click', function() {

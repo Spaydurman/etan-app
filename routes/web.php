@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAccountController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::post('/employee/edit/save', [EmployeeController::class, 'saveEdit'])->nam
 
 // Attemdance
 Route::post('/attendance', [AttendanceController::class, 'upload'])->name('attendance-upload')->middleware(['auth', 'role:1']);
+
+// Salary Deduction
+Route::post('/deduct-salary', [SalaryController::class, 'deduct'])->name('salary.deduct')->middleware(['auth', 'role:1']);

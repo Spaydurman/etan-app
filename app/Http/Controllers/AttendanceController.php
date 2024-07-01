@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Salary;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Imports\AttendanceImport;
@@ -27,6 +30,8 @@ class AttendanceController extends Controller
         $file = $request->file('excel_file');
         try {
             Excel::import(new AttendanceImport(), $file);
+
+            $this->salaryUpdate();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Attendance uploaded successfully'
@@ -60,5 +65,66 @@ class AttendanceController extends Controller
         }
 
         return redirect()->route('employee-dashboard')->with('success', 'Attendance imported successfully.');
+    }
+
+    public function salaryUpdate(){
+        $lastDate = Attendance::orderBy('updated_at', 'desc')->first();
+        $attendances = Attendance::where('date', $lastDate->date)->get();
+        $currentDate = Carbon::now();
+        foreach($attendances as $attendance){
+            $startOfWeek =(clone $currentDate)->startOfWeek()->addDays(-1)->format('Y-m-d');
+            $endOfWeek = (clone $currentDate)->startOfWeek()->addDays(5)->format('Y-m-d');
+            $date = Carbon::parse($attendance->date);
+            $dateName = strtolower($date->format('l'));
+
+            $decimalHours = $this->calculateDecimalHours($attendance->time_in,  $attendance->time_out);
+
+            if($decimalHours > 4 ){
+                $decimalHours = $decimalHours - 1;
+            }
+            if($decimalHours > 8 ){
+                $decimalHours = 8;
+            }
+
+            $dayColumn = $dateName;
+            $otColumn = $dateName . '_ot';
+
+            $data = [
+                'employee_id' => $attendance->employee_id,
+                $dayColumn => $decimalHours,
+                $otColumn => $attendance->overtime,
+                'from' => $startOfWeek,
+                'to' => $endOfWeek,
+            ];
+
+            $existingRecord = Salary::where('employee_id', $attendance->employee_id)
+                                ->where('from', '<=', $date)
+                                ->where('to', '>=', $date)
+                                ->first();
+
+            if ($existingRecord) {
+                Salary::where('employee_id', $attendance->employee_id)
+                    ->where('from', $startOfWeek)
+                    ->where('to', $endOfWeek)
+                    ->update($data);
+            } else {
+                Salary::create($data);
+            }
+        }
+    }
+    public function calculateDecimalHours($startTime, $endTime)
+    {
+        $start = new DateTime($startTime);
+        $end = new DateTime($endTime);
+
+        $interval = $start->diff($end);
+
+        $hours = $interval->h;
+        $minutes = $interval->i;
+        $seconds = $interval->s;
+
+        $decimalHours = $hours + ($minutes / 60) + ($seconds / 3600);
+
+        return $decimalHours;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Imports;
 
+use DateTime;
+use Carbon\Carbon;
+use App\Models\Salary;
 use App\Models\Employee;
 use App\Models\Attendance;
 use Illuminate\Validation\Rule;
@@ -49,12 +52,12 @@ class AttendanceImport implements ToModel, WithHeadingRow, SkipsOnError, WithVal
         }
 
         // Parse time_in and time_out
-        $time_in = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['time_in']);
-        $time_out = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['time_out']);
+        $time_in = PhpSpreadsheetDate::excelToDateTimeObject($row['time_in']);
+        $time_out = PhpSpreadsheetDate::excelToDateTimeObject($row['time_out']);
 
         $row['time_in'] = $time_in->format('H:i:s');
         $row['time_out'] = $time_out->format('H:i:s');
-        Log::info( $row['time_in']);
+
         $validator = Validator::make($row, [
             'employee_id' => ['required'],
             'name' => ['required'],
@@ -76,11 +79,12 @@ class AttendanceImport implements ToModel, WithHeadingRow, SkipsOnError, WithVal
             ['employee_id' => $row['employee_id'], 'date' => $row['date']],
             [
                 'name' => $row['name'],
-                'time-in' => $row['time_in'],
-                'time-out' => $row['time_out'],
+                'time_in' => $row['time_in'],
+                'time_out' => $row['time_out'],
                 'overtime' => $row['overtime'],
             ]
         );
+
         return $attendance;
     }
 

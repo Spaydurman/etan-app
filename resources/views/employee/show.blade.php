@@ -5,7 +5,7 @@
 
 @section('contents')
 
-<div class="info-container">
+<section class="info-container">
     <section class="image-personal-info">
         <div class="image-total">
             <div class="image-con">
@@ -21,32 +21,40 @@
             </div>
             <div class="total-weekly">
                 <h1>Total Weekly Salary</h1>
-                <h1 class="weekly-salary">₱ 0.00</h1>
+                <h1 class="weekly-salary">₱ {{$totalSalary}}</h1>
 
                 <div class="run-down">
                     <div class="info-p">
                         <p>Weekly Salary:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{$totalWeekly}}</p>
                     </div>
                     <div class="info-p">
                         <p>Overtime:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{$totalOT}}</p>
                     </div>
                     <div class="info-p">
                         <p>CA Balance:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{ number_format($salary->cash_advance ?? 0, 2) }}</p>
+                    </div>
+                    <div class="info-p">
+                        <p>Meals:  </p>
+                        <p>₱ {{ number_format($salary->meals ?? 0, 2) }}</p>
                     </div>
                     <div class="info-p sss">
                         <p>SSS:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{ number_format($salary->sss ?? 0, 2) }}</p>
                     </div>
                     <div class="info-p">
                         <p>PhilHealth:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{ number_format($salary->phil_health ?? 0, 2) }}</p>
                     </div>
                     <div class="info-p">
                         <p>Tax:  </p>
-                        <p>₱ 0.00</p>
+                        <p>₱ {{ number_format($salary->tax ?? 0, 2) }}</p>
+                    </div>
+                    <div class="info-p">
+                        <p>Others:  </p>
+                        <p>₱ {{ number_format($salary->others ?? 0, 2) }}</p>
                     </div>
                 </div>
             </div>
@@ -125,14 +133,62 @@
                 <h1>File Upload</h1>
             </div>
         </div>
+        <div class="edit-con">
+            <form action="{{ route('employee.edit') }}">
+                @csrf
+                <input type="hidden" name="id" value="{{$employee->id}}">
+                <button type="submit" class="edit">Edit</button>
+            </form>
+        </div>
     </section>
-    <div class="edit-con">
-        <form action="{{ route('employee.edit') }}">
-            @csrf
-            <input type="hidden" name="id" value="{{$employee->id}}">
-            <button type="submit" class="edit">Edit</button>
-        </form>
-    </div>
-</div>
 
+
+    <section class="salary-deduction">
+        <form action="{{ route('salary.deduct') }}" id="salary-deduct" method="POST">
+            @csrf
+            <div class="text-container">
+                <h1>Salary Deduction</h1>
+            </div>
+
+            <div class="input-con">
+                <div class="input">
+                    <label for="cad">Cash Advance</label>
+                    <input type="number" name="cad" id="cad" class="cash-advance" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+                <div class="input">
+                    <label for="meals">Meals</label>
+                    <input type="number" name="meals" id="meals" class="meals" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+                <div class="input">
+                    <label for="sss">SSS</label>
+                    <input type="number" name="sss" id="sss" class="sss" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+            </div>
+            <div class="input-con">
+                <div class="input">
+                    <label for="philhealth">PhilHealth </label>
+                    <input type="number" name="philhealth" id="philhealth" class="philhealth" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+                <div class="input">
+                    <label for="tax">Tax</label>
+                    <input type="number" name="tax" id="tax" class="tax" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+                <div class="input">
+                    <label for="others">Others</label>
+                    <input type="number" name="others" id="others" class="others" step="0.01" pattern="\d+(\.\d{1,2})?">
+                </div>
+            </div>
+
+            <div class="edit-con save-con">
+                <div class="input">
+                    <input type="hidden" name="employee_id" value="{{$employee->employee_id}}">
+                </div>
+                <button type="submit" class="edit save">Save</button>
+            </div>
+        </form>
+    </section>
+</section>
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('js/show.js') }}"></script>
 @endsection

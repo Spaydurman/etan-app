@@ -29,6 +29,8 @@
                         <th>Email</th>
                         <th>Date Hired</th>
                         <th>Attendance</th>
+                        <th>Daily Rate (₱) </th>
+                        <th>Current Salary (₱) </th>
                     </tr>
                 </thead>
             </table>

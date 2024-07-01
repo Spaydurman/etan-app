@@ -110,6 +110,7 @@ html, body {
     display: flex;
     height: 3rem;
     width: 100%;
+    max-width: 100%;
     background-color: var(--primary-clr);
     border-bottom: 1px solid black;
 }
@@ -166,4 +167,9 @@ html, body {
     /* height: calc(100vh - 3rem); */
     height: calc(100% - 3rem - 1px);
     padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
