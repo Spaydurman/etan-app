@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AddAccountController;
 use App\Http\Controllers\AttendanceController;
@@ -44,3 +45,7 @@ Route::post('/attendance', [AttendanceController::class, 'upload'])->name('atten
 
 // Salary Deduction
 Route::post('/deduct-salary', [SalaryController::class, 'deduct'])->name('salary.deduct')->middleware(['auth', 'role:1']);
+
+// Add Account
+Route::get('/account', [AccountController::class, 'index'])->name('add.account')->middleware(['auth', 'role:1']);
+Route::post('/account/create', [AccountController::class, 'create'])->name('account.create')->middleware(['auth', 'role:1']);
